@@ -7,7 +7,6 @@ Function Get-UIWindow(){
         [string]$process_title,
         [string]$log_file
     )
-    # reference link https://msdn.microsoft.com/en-us/library/system.windows.automation(v=vs.110).aspx
 	If( $pscmdlet.ParameterSetName -eq "PSName" ){
 	    If( ($process=ps $process_name -ea 4) ){
 	        If($process.count -gt 1 ){
@@ -23,9 +22,15 @@ Function Get-UIWindow(){
 	    }
 	}
     Try{
-		$root_element = [Windows.Automation.AutomationElement]::RootElement
-		$wapc = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::ProcessIdProperty, $process_id)
-		return $root_element.FindFirst([Windows.Automation.TreeScope]::Children, $wapc)
+		return `
+		[Windows.Automation.AutomationElement]::RootElement.FindFirst(
+			[Windows.Automation.TreeScope]::Children, 
+			([Windows.Automation.PropertyCondition]::new(
+					[Windows.Automation.AutomationElement]::ProcessIdProperty, 
+					$process_id
+				)
+		    )
+		)
     }Catch{
         throw $_
     }Finally{}
