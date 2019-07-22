@@ -1,8 +1,8 @@
 Function Get-UIWindow(){
-    [CmdletBinding()]param(
-        [Parameter(Mandatory=$True,ParameterSetName='PSName')]
+    [CmdletBinding(DefaultParameterSetName='PSName')]param(
+        [Parameter(Mandatory=$True,	Position=0,ParameterSetName='PSName')]
         [string]$process_name,
-		[Parameter(Mandatory=$True,ParameterSetName='PSID')]
+		[Parameter(Mandatory=$True,Position=0,ParameterSetName='PSID')]
         [int]$process_id,
         [string]$process_title,
         [string]$log_file
@@ -18,8 +18,11 @@ Function Get-UIWindow(){
 				$process_id = $process.id
 			}
 	    }Else{
-	        throw "Not found process $process_name"
+	        throw "Not found process with name : $process_name"
 	    }
+	}
+	if(!(ps -id $process_id -ea 4)){
+		throw "Not found process with ID : $process_id"
 	}
     Try{
 		return `

@@ -26,7 +26,8 @@ namespace System.Windows.Automation
         {
             for (int i = 0; i < message.Length; i++)
             {
-                SafeNativeMethods.PostMessage(hWindow, WM_CHAR, (IntPtr)message[i], IntPtr.Zero);
+                Console.WriteLine((IntPtr)message[i]);
+				SafeNativeMethods.PostMessage(hWindow, WM_CHAR, (IntPtr)message[i], IntPtr.Zero);
             }
         }
         public static void SendWait(IntPtr hWindow, string message)
@@ -83,7 +84,6 @@ namespace System.Windows.Automation
 
         public static void Activate(IntPtr hWnd)
         {
-
             SafeNativeMethods.ShowWindow(hWnd,9); // try to restore window anyway
             SafeNativeMethods.SetForegroundWindow(hWnd); // then active window
 

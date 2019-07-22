@@ -6,7 +6,7 @@ Function Close-UIWindow(){
 	If( $au_element -eq $null ){
 	    return
 	}
-    If( $au_element.Current.ControlType.LocalizedControlType -eq 'window' ){
+    If( $au_element.Current.ControlType.ProgrammaticName -eq 'ControlType.Window' ){
         $au_element.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close()
     }else{
 		throw "The provided element is not a window control type"
