@@ -26,7 +26,6 @@ namespace System.Windows.Automation
         {
             for (int i = 0; i < message.Length; i++)
             {
-                Console.WriteLine((IntPtr)message[i]);
 				SafeNativeMethods.PostMessage(hWindow, WM_CHAR, (IntPtr)message[i], IntPtr.Zero);
             }
         }
@@ -163,7 +162,6 @@ namespace System.Windows.Automation
 			mouseInput.mkhi.mi.mouseData = 0;
 
 			mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE | MouseEventFlags.MOUSEEVENTF_ABSOLUTE;
-			// mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE; 
 			SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
 
 			mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN;
