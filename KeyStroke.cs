@@ -6,6 +6,10 @@ namespace KeyStroke
     class Program
     {
         private const int WM_CHAR = 0x0102;
+        private const int WM_CLEAR = 0x00303;
+        private const int WM_COPY = 0x0301;
+        private const int WM_PASTE = 0x0302;
+        private const int WM_CUT = 0x0300;
 
         internal static class SafeNativeMethods
         {
@@ -14,13 +18,7 @@ namespace KeyStroke
             internal static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
         }
 
-
-        /// <summary>
-        /// Simulates pressing a key
-        /// </summary>
-        /// <param name="hWindow"></param>
-        /// <param name="key"></param>
-        public static void PressKey(IntPtr hWindow, string message)
+        public static void SendString(IntPtr hWindow, string message)
         {
             for (int i = 0; i < message.Length; i++)
             {
@@ -28,11 +26,26 @@ namespace KeyStroke
             }
 
         }
-        static void Main(string[] args)
+
+        public static void SendClipboard(IntPtr hWindow, String ActionType)
         {
-            
-            PressKey((IntPtr)399224,"1654651");
-            Console.ReadLine();
+            int message;
+            switch (ActionType)
+            {
+                case "COPY":
+                    message = WM_COPY;
+                    break;
+                case "PASTE":
+                    message = WM_PASTE;
+                    break;
+                case "CUT":
+                    message = WM_CUT;
+                    break;
+                case "CLEAR":
+                    message = WM_CLEAR;
+                    break;
+            }
+            SafeNativeMethods.PostMessage(hWindow, message, IntPtr.Zero, IntPtr.Zero);
         }
     }
 }
