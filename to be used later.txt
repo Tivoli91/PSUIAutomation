@@ -1,9 +1,0 @@
-$a =Get-UIWindow "automation anywhere" "automation anywhere enterprise client"
-$b = Get-UIElement $a "MenuItem" "Tools" -CheckName
-Invoke-UIButton $b 
-$c = Get-UIElement $b "MenuItem" "Re-Login" -CheckName
-Invoke-UIButton $c
-
-$an = Get-UIElement $a "Window" "Client Login" -CheckName
-$url = Get-UIElement $an "Edit" "cmbServerInfo"
-$x = $url.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern) #.getValue()
